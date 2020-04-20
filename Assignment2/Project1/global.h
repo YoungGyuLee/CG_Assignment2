@@ -10,7 +10,8 @@
 #define GREEN 1
 #define BLUE 2
 #define YELLOW 3
-#define BLACK 4
+#define JUMP 4
+#define BLACK 5
 
 //sound track
 #define BGM 5
@@ -20,6 +21,11 @@
 #define WIN 9
 #define LOSE 10
 #define CHANGE 11
+
+////jump
+//#define UP 0
+//#define STAY 1
+//#define DOWN 2
 
 //left, right
 #define LEFT 12

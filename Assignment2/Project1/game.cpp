@@ -16,13 +16,17 @@ using namespace std;
 
 MCIDEVICEID mID;
 
+
 void init() {
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glShadeModel(GL_FLAT);
 	cheatMode = NO;
+	velocity = initVelocity;
+	currentVelocity = velocity;
 	startTickCount = GetTickCount64();
 	srand((unsigned int)time(NULL));
-	thief.setThiefPose(rand()%4);
+	thief.setThiefPose(JUMP);
+	//thief.setThiefPose(rand()%4);
 	walls.push_back(CWall());
 	sound.playsound(BGM);
 }
@@ -41,6 +45,9 @@ void setObjectColor(int color) {
 		break;
 	case YELLOW:
 		glColor3f(1.0, 1.0, 0.0);
+		break;
+	case JUMP:
+		glColor3f(0.0, 0.0, 0.0);
 		break;
 	case BLACK:
 		glColor3f(0.0, 0.0, 0.0);
@@ -99,15 +106,6 @@ void playSound() {
 
 }
 
-void registerCallbackFunctions(char** argv) {
-
-	glutDisplayFunc(display);
-	glutReshapeFunc(reshape);
-	glutIdleFunc(moveWall);
-	glutSpecialFunc(selectPose);
-	glutKeyboardFunc(selectCheatMode);
-}
-
 void display() {
 
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -163,24 +161,204 @@ void reshape(int w, int h) {
 	glLoadIdentity();
 }
 
-void moveWall() {
+//void moveWall() {
+//
+//	currentVelocity = velocity;
+//
+//	//Wall - move wall in "currentVelocity"
+//	for (int i = 0; i < total; i++) {
+//		walls[i].setWallPositionX(walls[i].getWallPositionX() - currentVelocity);
+//		if (walls[i].getWallPositionX() + walls[i].getWallWidth() < 0) {
+//			walls[i].setWallPositionX(-10);
+//			front = i;
+//		}
+//	}
+//
+//	//If the wall and the thief collide ...
+//	if (walls[now].getWallPositionX() <= (thief.getThiefPositionX() + thief.getThiefSize())) {
+//		
+//		//Wall - change to thief color
+//		walls[now].setWallColor(thief.getThiefPose());
+//
+//		//Thief - jump timer start
+//		if (walls[now].getWallColor() == JUMP) {
+//			jumpTimer = GetTickCount64();
+//			jumping = true;
+//		}
+//
+//		//Thief - change to new color
+//		thief.setThiefPose(JUMP);
+//		//thief.setThiefPose(rand() % 5);
+//		now++;
+//		sound.playsound(THIEFPASS);
+//	}
+//	
+//	//Thief - jump
+//	if ((GetTickCount64() - jumpTimer) < (initVelocity / currentVelocity * 1000) && jumping)
+//	{
+//		thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 20);
+//		thief.setThiefPositionY(thief.getThiefPositionY() + currentVelocity * 5);
+//	}
+//	else if ((GetTickCount64() - jumpTimer) < (initVelocity / currentVelocity * 2000) && jumping)
+//	{
+//		thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 20);
+//		thief.setThiefPositionY(thief.getThiefPositionY() - currentVelocity * 5);
+//	}
+//	else if (jumping)
+//	{
+//		cout << thief.getThiefPositionX() << endl;
+//		thief.setThiefPositionY(1.9);
+//		jumping = false;
+//	}
+//
+//	//System - check if pass or fail
+//	if (walls[previous].getWallPositionX() <= (player.getPlayerPositionX() + player.getPlayerSize())) {
+//
+//		switch (cheatMode)
+//		{
+//		case NO:
+//			if (player.getPlayerPose() == walls[previous].getWallColor()) {
+//				sound.playsound(PLAYERPASS);
+//				cout << "Pass" << endl;
+//				velocity += 0.01;
+//				interval -= 300;
+//				previousPlayerPosition = player.getPlayerPositionX();
+//				player.setPassCount(passCount++);
+//				thief.setPassCount(passCount++);
+//				pass = true;
+//			}
+//			else {
+//				sound.playsound(PLAYERNONPASS);
+//				cout << "Fail" << endl;
+//				failCount++;
+//				if (failCount >= 3)
+//					message(false);
+//				pass = false;
+//			}
+//			previous++;
+//			break;
+//
+//		case ALL_PASS:
+//			sound.playsound(PLAYERPASS);
+//			cout << "Pass" << endl;
+//			velocity += 0.01;
+//			interval -= 300;
+//			previousPlayerPosition = player.getPlayerPositionX();
+//			pass = true;
+//			player.setPassCount(passCount++);
+//			thief.setPassCount(passCount++);
+//			previous++;
+//			break;
+//
+//		case ALL_FAIL:
+//			sound.playsound(PLAYERNONPASS);
+//			cout << "Fail" << endl;
+//			failCount++;
+//			if (failCount >= 3)
+//				message(false);
+//			pass = false;
+//			previous++;
+//			break;
+//		}
+//	}
+//
+//	//Player - move toward thief with moving animation
+//	if (pass) {
+//		player.setPlayerPositionX(player.getPlayerPositionX() + playerDistance);
+//		if ((player.getPlayerPositionX() - previousPlayerPosition) >= 1.0) {
+//			previousPlayerPosition = 0.0;
+//			pass = false;
+//			//cameraZoomIn();
+//		}
+//	}
+//
+//
+//	//System - WIN if the distance between player and thief is less than a "threshold"
+//	//"threshold" == player.getPlayerSize()
+//	if (thief.getThiefPositionX() <= player.getPlayerPositionX() + player.getPlayerSize())
+//		message(true);
+//
+//	//System - LOSE after 3 minutes in all pass mode
+//	if ((cheatMode == ALL_PASS) && (GetTickCount64() - allPassTimer > 1000 * 60 * 3))
+//		message(false);
+//
+//	glutPostRedisplay();
+//}
 
-	//Wall - move wall in "velocity"
+void moveWall2(int value) {
+
+	currentVelocity = velocity;
+
+	//Wall - move wall in "currentVelocity"
 	for (int i = 0; i < total; i++) {
-		walls[i].setWallPositionX(walls[i].getWallPositionX() - velocity);
+		walls[i].setWallPositionX(walls[i].getWallPositionX() - currentVelocity);
 		if (walls[i].getWallPositionX() + walls[i].getWallWidth() < 0) {
 			walls[i].setWallPositionX(-10);
 			front = i;
 		}
 	}
 
-	//Thief - change color
+	//If the wall and the thief collide ...
 	if (walls[now].getWallPositionX() <= (thief.getThiefPositionX() + thief.getThiefSize())) {
+
+		//Wall - change to thief color
 		walls[now].setWallColor(thief.getThiefPose());
-		thief.setThiefPose(rand() % 4);
+
+		//Thief - jump timer start
+		if (walls[now].getWallColor() == JUMP) {
+			//jumpTimer = GetTickCount64();
+			jumpTimer = 0;
+			jumping = true;
+		}
+
+		//Thief - change to new color
+		thief.setThiefPose(JUMP);
+		//thief.setThiefPose(rand() % 5);
 		now++;
 		sound.playsound(THIEFPASS);
 	}
+
+	//Thief - jump
+	jumpTimer++;
+	//cout << jumpTimer << endl;
+	if (jumpTimer < (initVelocity / currentVelocity * 50) && jumping)
+	{
+		thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 20);
+		thief.setThiefPositionY(thief.getThiefPositionY() + currentVelocity * 4);
+	}
+	else if (jumpTimer < (initVelocity / currentVelocity * 100) && jumping)
+	{
+		thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 20);
+	}
+	else if (jumpTimer < (initVelocity / currentVelocity * 150) && jumping)
+	{
+		thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 20);
+		thief.setThiefPositionY(thief.getThiefPositionY() - currentVelocity * 4);
+	}
+	else if (jumping)
+	{
+		cout << thief.getThiefPositionX() << endl;
+		thief.setThiefPositionY(1.9);
+		jumping = false;
+	}
+
+	////Thief - jump
+	//if ((GetTickCount64() - jumpTimer) < (initVelocity / currentVelocity * 1000) && jumping)
+	//{
+	//	thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 20);
+	//	thief.setThiefPositionY(thief.getThiefPositionY() + currentVelocity * 5);
+	//}
+	//else if ((GetTickCount64() - jumpTimer) < (initVelocity / currentVelocity * 2000) && jumping)
+	//{
+	//	thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 20);
+	//	thief.setThiefPositionY(thief.getThiefPositionY() - currentVelocity * 5);
+	//}
+	//else if (jumping)
+	//{
+	//	cout << thief.getThiefPositionX() << endl;
+	//	thief.setThiefPositionY(1.9);
+	//	jumping = false;
+	//}
 
 	//System - check if pass or fail
 	if (walls[previous].getWallPositionX() <= (player.getPlayerPositionX() + player.getPlayerSize())) {
@@ -243,12 +421,6 @@ void moveWall() {
 		}
 	}
 
-	////DJ
-	//if (true)
-	//{
-	//	thief.jumpThief(velocity);
-	//}
-
 
 	//System - WIN if the distance between player and thief is less than a "threshold"
 	//"threshold" == player.getPlayerSize()
@@ -260,7 +432,12 @@ void moveWall() {
 		message(false);
 
 	glutPostRedisplay();
+
+	glutTimerFunc(1, moveWall2, 1);
 }
+
+
+
 
 void selectPose(int key, int x, int y) {
 	sound.playsound(CHANGE);
@@ -323,7 +500,13 @@ int main(int argc, char** argv) {
 	glutCreateWindow(argv[0]);
 	init();
 
-	registerCallbackFunctions(argv);
+	//Register callback functions
+	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
+	//glutIdleFunc(moveWall);
+	glutTimerFunc(1, moveWall2, 1);
+	glutSpecialFunc(selectPose);
+	glutKeyboardFunc(selectCheatMode);
 
 	//Enter event processing loop
 	glutMainLoop();

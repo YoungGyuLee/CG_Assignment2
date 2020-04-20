@@ -37,12 +37,16 @@ int now = 0;		//Index of the wall just to the left of theif
 int passCount = 0;
 int failCount = 0;		//Number of fail
 int interval = 3000;	//Wall creation interval
-float velocity = 0.01;	//Wall velocity
+float initVelocity = 0.01; //Wall initial velocity
+float currentVelocity; ////Wall current velocity
+float velocity;	//Wall new velocity
 
 //Timer variables
 int startTickCount = 0;
 int currentTickCount = 0;
 int allPassTimer = 0;
+int jumpTimer = 0;
+bool jumping = false;
 
 //Player animation variables
 bool pass = false;
@@ -68,11 +72,12 @@ void setObjectColor(int color);	// Set theif or wall pose(color)
 void cameraZoomIn();			// Camera zoom-in
 void message(bool success);		// End the game and show the message if pass or fail
 void playSound();				// Play background or effect sound
-void registerCallbackFunctions(char** argv); // Register input callback functions
 
 //Input callback functions
 void display();		// Display game objects (player, theif, wall, & ground)
 void reshape(int w, int h); // reshape callback
 void moveWall();	// Change the wall position
+void moveWall2(int value);	// Change the wall position
+
 void selectPose(int key, int x, int y);	// Select player pose using keyboard input
 void selectCheatMode(unsigned char Key, int x, int y); // Selec cheat mode using keyboard input

@@ -98,8 +98,7 @@ void CThiefForeArm::setMotion(int pose)
 		leftAngle = 90;
 		rightAngle = -90;
 		break;
-	default:
-		//RED
+	case BLACK:
 		leftAngle = 0;
 		rightAngle = 0;
 		break;
