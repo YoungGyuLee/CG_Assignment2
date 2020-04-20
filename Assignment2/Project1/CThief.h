@@ -32,15 +32,18 @@ public:
 	CThief();
 	~CThief();
 
-	float getTheifPositionX();
-	float getTheifPositionY();
+	void setThiefPositionX(float positionX);
+	void setThiefPositionY(float positionY);
+	float getThiefPositionX();
+	float getThiefPositionY();
 
-	void setTheifPose(int pose);
-	int getTheifPose();
+	void setThiefPose(int pose);
+	int getThiefPose();
 
 	float getThiefSize();
 
 	void drawThief();
+	void jumpThief(float velocity);
 
 	void setPassCount(int passCount);
 

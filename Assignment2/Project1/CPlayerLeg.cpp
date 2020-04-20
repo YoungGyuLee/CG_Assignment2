@@ -121,7 +121,7 @@ void CPlayerLeg::setLeftAngle(bool thighDirection, float thighAngle)
 	default:
 		break;
 	}
-	cout << leftDirection << " " << leftAngle << endl;
+	//cout << leftDirection << " " << leftAngle << endl;
 
 }
 

@@ -50,6 +50,8 @@ void CPlayer::drawPlayer()
 
 	leftArm.drawArm(positionX + playerWidth * 0.5, positionY + playerHeight*0.9, LEFT);
 	leftThigh.drawThigh(positionX + playerWidth * 0.5, positionY + playerHeight * 0.1, LEFT);
+	
+	//Draw player body
 	glBegin(GL_QUADS);
 	glColor3f(1.0, 0.0, 0.0);
 		glVertex2f(this->positionX, this->positionY);
@@ -57,8 +59,8 @@ void CPlayer::drawPlayer()
 		glVertex2f(this->positionX + this->playerWidth, this->positionY + this->playerHeight);
 		glVertex2f(this->positionX + this->playerWidth, this->positionY);
 	glEnd();
+	
 	playerFace.drawFace(positionX + playerWidth * 0.5, positionY + playerHeight);
-
 	rightArm.drawArm(positionX + playerWidth * 0.5, positionY + playerHeight*0.9, RIGHT);
 	rightThigh.drawThigh(positionX + playerWidth * 0.5, positionY + playerHeight * 0.1, RIGHT);
 

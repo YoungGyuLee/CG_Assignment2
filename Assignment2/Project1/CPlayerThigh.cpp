@@ -40,6 +40,7 @@ void CPlayerThigh::drawThigh(float positionX, float positionY, int type)
 
 	jointX = positionX;
 	jointY = positionY;
+	
 	switch (type)
 	{
 	case LEFT:

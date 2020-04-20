@@ -6,7 +6,8 @@ CWall::CWall()
 	positionY = 1;
 	color = BLACK;
 	width = 0.5;
-	height = 6;
+	//height = 6;
+	height = 2;
 	front = 0;
 }
 

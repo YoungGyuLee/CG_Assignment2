@@ -3,19 +3,18 @@
 using namespace std;
 
 
-MCI_OPEN_PARMS openParams;
-MCI_PLAY_PARMS playParams;
-DWORD deviceID;
-MCI_OPEN_PARMS openParams2;
-MCI_PLAY_PARMS playParams2;
+//DJ-삭제 예정
+//MCI_OPEN_PARMS openParams;
+//MCI_PLAY_PARMS playParams;
+//DWORD deviceID;
+//MCI_OPEN_PARMS openParams2;
+//MCI_PLAY_PARMS playParams2;
+//int dwID;
+//wchar_t text1[20] = L"";
+//size_t length;
+//unsigned int TBO;
 
-int dwID;
-wchar_t text1[20] = L"";
-size_t length;
-//LPCWSTR text1;
-unsigned int TBO;
 MCIDEVICEID mID;
-
 
 void init() {
 	glClearColor(1.0, 1.0, 1.0, 1.0);
@@ -23,7 +22,7 @@ void init() {
 	cheatMode = NO;
 	startTickCount = GetTickCount64();
 	srand((unsigned int)time(NULL));
-	thief.setTheifPose(rand()%4);
+	thief.setThiefPose(rand()%4);
 	walls.push_back(CWall());
 	sound.playsound(BGM);
 }
@@ -124,26 +123,9 @@ void display() {
 	
 	//Player - initialize position and size
 	player.drawPlayer();
-	/*glBegin(GL_QUADS);
-		setObjectColor(player.getPlayerPose());
-		glVertex2f(player.getPlayerPositionX(), player.getPlayerPositionY());
-		glVertex2f(player.getPlayerPositionX(), player.getPlayerPositionY() + player.getPlayerSize());
-		glVertex2f(player.getPlayerPositionX() + player.getPlayerSize(), player.getPlayerPositionY() + player.getPlayerSize());
-		glVertex2f(player.getPlayerPositionX() + player.getPlayerSize(), player.getPlayerPositionY());
-	glEnd();
-	*/
+	
 	//Thief - Initialize position and size
-
 	thief.drawThief();
-	/*
-	glBegin(GL_QUADS);
-		setObjectColor(thief.getTheifPose());
-		glVertex2f(thief.getTheifPositionX(), thief.getTheifPositionY());
-		glVertex2f(thief.getTheifPositionX(), thief.getTheifPositionY() + thief.getThiefSize());
-		glVertex2f(thief.getTheifPositionX() + thief.getThiefSize(), thief.getTheifPositionY() + thief.getThiefSize());
-		glVertex2f(thief.getTheifPositionX() + thief.getThiefSize(), thief.getTheifPositionY());
-	glEnd();
-	*/
 	
 	glBegin(GL_QUADS);
 		//Wall - create a wall every "interval" time
@@ -175,7 +157,8 @@ void reshape(int w, int h) {
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(velocity * 50, 10, 0, (10 - velocity * 50) / 2.0);
+	//gluOrtho2D(velocity * 50, 10, 0, (10 - velocity * 50) / 2.0);
+	gluOrtho2D(0, 10, 0, 7);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -192,9 +175,9 @@ void moveWall() {
 	}
 
 	//Thief - change color
-	if (walls[now].getWallPositionX() <= (thief.getTheifPositionX() + thief.getThiefSize())) {
-		walls[now].setWallColor(thief.getTheifPose());
-		thief.setTheifPose(rand() % 4);
+	if (walls[now].getWallPositionX() <= (thief.getThiefPositionX() + thief.getThiefSize())) {
+		walls[now].setWallColor(thief.getThiefPose());
+		thief.setThiefPose(rand() % 4);
 		now++;
 		sound.playsound(THIEFPASS);
 	}
@@ -256,13 +239,20 @@ void moveWall() {
 		if ((player.getPlayerPositionX() - previousPlayerPosition) >= 1.0) {
 			previousPlayerPosition = 0.0;
 			pass = false;
-			cameraZoomIn();
+			//cameraZoomIn();
 		}
 	}
 
+	////DJ
+	//if (true)
+	//{
+	//	thief.jumpThief(velocity);
+	//}
+
+
 	//System - WIN if the distance between player and thief is less than a "threshold"
 	//"threshold" == player.getPlayerSize()
-	if (thief.getTheifPositionX() <= player.getPlayerPositionX() + player.getPlayerSize())
+	if (thief.getThiefPositionX() <= player.getPlayerPositionX() + player.getPlayerSize())
 		message(true);
 
 	//System - LOSE after 3 minutes in all pass mode
@@ -327,7 +317,8 @@ int main(int argc, char** argv) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 
 	//Initialize and open window
-	glutInitWindowSize(1000, 500);
+	//glutInitWindowSize(1000, 500);
+	glutInitWindowSize(1000, 700);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow(argv[0]);
 	init();
