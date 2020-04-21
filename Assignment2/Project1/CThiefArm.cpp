@@ -101,11 +101,11 @@ void CThiefArm::setMotion(int pose)
 		leftAngle = 90;
 		rightAngle = -90;
 		break;
-	default:
-		//RED
-		leftAngle = 0;
-		rightAngle = 0;
-		break;
+
+	//case DEFAULT:
+	//	leftAngle = 0;
+	//	rightAngle = 0;
+	//	break;
 	}
 
 	leftForeArm.setMotion(pose);

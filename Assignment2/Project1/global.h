@@ -10,7 +10,8 @@
 #define GREEN 1
 #define BLUE 2
 #define YELLOW 3
-#define BLACK 4
+#define JUMP 4
+#define DEFAULT 5
 
 //sound track
 #define BGM 5

@@ -54,13 +54,6 @@ float CThief::getThiefSize()
 	return thiefSize;
 }
  
-//void CThief::jumpThief(float velocity)
-//{
-//
-//	this->setThiefPositionX(this->getThiefPositionX() - velocity);
-//
-//
-//}
 
 
 void CThief::drawThief()

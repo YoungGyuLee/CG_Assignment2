@@ -34,20 +34,28 @@ int previous = 0;	//Index of the wall just to the right of player
 int now = 0;		//Index of the wall just to the left of theif
 
 //System varables
-int passCount = 0;
-int failCount = 0;		//Number of fail
-int interval = 3000;	//Wall creation interval
-float velocity = 0.01;	//Wall velocity
+int passCount = 0;		 //Number of pass
+int failCount = 0;		 //Number of fail
+int interval = 3000;	 //Wall creation interval
+float initVelocity = 0.02f; //Wall initial velocity
+float currentVelocity;		//Wall current velocity
+float velocity;				//Wall new velocity
 
 //Timer variables
 int startTickCount = 0;
 int currentTickCount = 0;
 int allPassTimer = 0;
 
+//Jump variables
+int jumpThiefTimer = 0;
+int jumpPlayerTimer = 0;
+bool jumpingThief = false;
+bool jumpingPlayer = false;
+
 //Player animation variables
 bool pass = false;
-float playerDistance = 0.1;
-float previousPlayerPosition = 0.0;
+float playerDistance = 0.1f;
+float previousPlayerPosition = 0.0f;
 
 //Cheatcode variables
 enum CheatMode
@@ -68,11 +76,11 @@ void setObjectColor(int color);	// Set theif or wall pose(color)
 void cameraZoomIn();			// Camera zoom-in
 void message(bool success);		// End the game and show the message if pass or fail
 void playSound();				// Play background or effect sound
-void registerCallbackFunctions(char** argv); // Register input callback functions
 
 //Input callback functions
 void display();		// Display game objects (player, theif, wall, & ground)
 void reshape(int w, int h); // reshape callback
-void moveWall();	// Change the wall position
+void doSystemCheck();	//  Game system update
+void doAnimation(int value);	// Player, thief, wall animation update
 void selectPose(int key, int x, int y);	// Select player pose using keyboard input
-void selectCheatMode(unsigned char Key, int x, int y); // Selec cheat mode using keyboard input
+void doKeyboard(unsigned char Key, int x, int y); // Selec cheat mode using keyboard input

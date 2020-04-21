@@ -6,7 +6,7 @@ CPlayer::CPlayer()
 	positionY = 1.9;
 	playerWidth = 0.5;
 	playerHeight = 1;
-	pose = RED;
+	pose = DEFAULT;
 	passCount = 0;
 }
 
@@ -17,6 +17,11 @@ CPlayer::~CPlayer()
 void CPlayer::setPlayerPositionX(float positionX)
 {
 	this->positionX = positionX;
+}
+
+void CPlayer::setPlayerPositionY(float positionY)
+{
+	this->positionY = positionY;
 }
 
 float CPlayer::getPlayerPositionX()
