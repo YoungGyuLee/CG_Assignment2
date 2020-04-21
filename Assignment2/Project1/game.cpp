@@ -143,14 +143,13 @@ void reshape(int w, int h) {
 	glLoadIdentity();
 }
 
-void doGameCheck() {
+void doSystemCheck() {
 
 	//If the wall and the thief collide ...
 	if (walls[now].getWallPositionX() < (thief.getThiefPositionX() + thief.getThiefSize())) {
 
 		//Wall - change to thief color
 		walls[now].setWallColor(thief.getThiefPose());
-		cout << thief.getThiefPose() << endl;
 
 		//Thief - jump timer start
 		if (walls[now].getWallColor() == JUMP) {
@@ -307,8 +306,6 @@ void doAnimation(int value) {
 }
 
 
-
-
 void selectPose(int key, int x, int y) {
 	sound.playsound(CHANGE);
 	switch (key) {
@@ -386,8 +383,8 @@ int main(int argc, char** argv) {
 	//Register callback functions
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
-	glutIdleFunc(doGameCheck);
 	glutTimerFunc(0, doAnimation, 1);
+	glutIdleFunc(doSystemCheck);
 	glutSpecialFunc(selectPose);
 	glutKeyboardFunc(doKeyboard);
 

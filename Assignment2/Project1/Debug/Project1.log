@@ -3,7 +3,7 @@
 D:\GraphicsWorkspace\CG_Assignment2\Assignment2\Project1\game.cpp(13,33): warning C4244: '=': 'ULONGLONG'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 D:\GraphicsWorkspace\CG_Assignment2\Assignment2\Project1\game.cpp(113,36): warning C4244: '=': 'ULONGLONG'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 D:\GraphicsWorkspace\CG_Assignment2\Assignment2\Project1\game.cpp(116,66): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\GraphicsWorkspace\CG_Assignment2\Assignment2\Project1\game.cpp(176,21): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
-D:\GraphicsWorkspace\CG_Assignment2\Assignment2\Project1\game.cpp(197,20): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
-D:\GraphicsWorkspace\CG_Assignment2\Assignment2\Project1\game.cpp(365,32): warning C4244: '=': 'ULONGLONG'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GraphicsWorkspace\CG_Assignment2\Assignment2\Project1\game.cpp(175,21): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
+D:\GraphicsWorkspace\CG_Assignment2\Assignment2\Project1\game.cpp(196,20): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
+D:\GraphicsWorkspace\CG_Assignment2\Assignment2\Project1\game.cpp(362,32): warning C4244: '=': 'ULONGLONG'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Project1.vcxproj -> D:\GraphicsWorkspace\CG_Assignment2\Assignment2\Project1\bin\x86\Assignment1.exe

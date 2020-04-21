@@ -22,11 +22,6 @@
 #define LOSE 10
 #define CHANGE 11
 
-////jump
-//#define UP 0
-//#define STAY 1
-//#define DOWN 2
-
 //left, right
 #define LEFT 12
 #define RIGHT 13
