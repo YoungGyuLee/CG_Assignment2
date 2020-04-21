@@ -36,8 +36,9 @@ public:
 	~CPlayer();
 
 	void setPlayerPositionX(float positionX);
-	float getPlayerPositionX();
+	void setPlayerPositionY(float positionY);
 
+	float getPlayerPositionX();
 	float getPlayerPositionY();
 
 	void setPlayerPose(int pose);

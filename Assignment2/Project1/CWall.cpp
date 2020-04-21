@@ -4,7 +4,7 @@ CWall::CWall()
 {
 	positionX = 10;
 	positionY = 1;
-	color = BLACK;
+	color = DEFAULT;
 	width = 0.5;
 	//height = 6;
 	height = 2;

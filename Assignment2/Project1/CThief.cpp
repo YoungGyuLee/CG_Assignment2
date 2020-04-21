@@ -54,25 +54,6 @@ float CThief::getThiefSize()
 	return thiefSize;
 }
  
-//void CThief::jumpThief(float velocity, int state)
-//{
-//	switch (state)
-//	{
-//	case UP:
-//		this->positionX -= velocity;
-//		this->positionY += velocity * 10;
-//		break;
-//
-//	case STAY:
-//		break;
-//
-//	case DOWN:
-//		this->positionX -= velocity;
-//		this->positionY -= velocity * 10;
-//		break;
-//	}
-//
-//}
 
 
 void CThief::drawThief()

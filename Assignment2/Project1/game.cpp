@@ -49,12 +49,6 @@ void setObjectColor(int color) {
 	case JUMP:
 		glColor3f(0.0, 0.0, 0.0);
 		break;
-	case BLACK:
-		glColor3f(0.0, 0.0, 0.0);
-		break;
-	default:
-		glColor3f(0.0, 0.0, 0.0);
-		break;
 	}
 }
 
@@ -112,7 +106,8 @@ void display() {
 
 	//Ground - initialize position and color
 	glBegin(GL_QUADS);
-		setObjectColor(BLACK);
+		//setObjectColor(JUMP);
+		glColor3f(0.0, 0.0, 0.0);
 		glVertex2f(0,0);
 		glVertex2f(0, 1);
 		glVertex2f(10, 1);
@@ -137,7 +132,8 @@ void display() {
 
 		//Wall - initialize position and color
 		for (int i = front; i < total; i++) {
-			setObjectColor(walls[i].getWallColor());
+			//setObjectColor(walls[i].getWallColor());
+			glColor3f(0.0, 0.0, 0.0);
 			glVertex2f(walls[i].getWallPositionX(), walls[i].getWallPositionY());
 			glVertex2f(walls[i].getWallPositionX(), walls[i].getWallPositionY() + walls[i].getWallHeight());
 			glVertex2f(walls[i].getWallPositionX() + walls[i].getWallWidth(), walls[i].getWallPositionY() + walls[i].getWallHeight());
@@ -299,16 +295,15 @@ void moveWall2(int value) {
 	}
 
 	//If the wall and the thief collide ...
-	if (walls[now].getWallPositionX() <= (thief.getThiefPositionX() + thief.getThiefSize())) {
+	if (walls[now].getWallPositionX() < (thief.getThiefPositionX() + thief.getThiefSize())) {
 
 		//Wall - change to thief color
 		walls[now].setWallColor(thief.getThiefPose());
 
 		//Thief - jump timer start
 		if (walls[now].getWallColor() == JUMP) {
-			//jumpTimer = GetTickCount64();
-			jumpTimer = 0;
-			jumping = true;
+			jumpThiefTimer = 0;
+			jumpingThief = true;
 		}
 
 		//Thief - change to new color
@@ -319,46 +314,63 @@ void moveWall2(int value) {
 	}
 
 	//Thief - jump
-	jumpTimer++;
-	//cout << jumpTimer << endl;
-	if (jumpTimer < (initVelocity / currentVelocity * 50) && jumping)
+	//부동소수점 오차를 무시하면 점프할 때마다 일정 거리만큼 왼쪽으로 가게 됨
+	jumpThiefTimer++;
+	if (jumpThiefTimer < (initVelocity / currentVelocity * 50) && jumpingThief)
 	{
-		thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 20);
-		thief.setThiefPositionY(thief.getThiefPositionY() + currentVelocity * 4);
+		thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 15.0f);
+		thief.setThiefPositionY(thief.getThiefPositionY() + currentVelocity * 2.0f);
 	}
-	else if (jumpTimer < (initVelocity / currentVelocity * 100) && jumping)
+	else if (jumpThiefTimer < (initVelocity / currentVelocity * 100) && jumpingThief)
 	{
-		thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 20);
+		thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 15.0f);
 	}
-	else if (jumpTimer < (initVelocity / currentVelocity * 150) && jumping)
+	else if (jumpThiefTimer < (initVelocity / currentVelocity * 150) && jumpingThief)
 	{
-		thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 20);
-		thief.setThiefPositionY(thief.getThiefPositionY() - currentVelocity * 4);
+		thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 15.0f);
+		thief.setThiefPositionY(thief.getThiefPositionY() - currentVelocity * 2.0f);
 	}
-	else if (jumping)
+	else if (jumpingThief)
 	{
-		cout << thief.getThiefPositionX() << endl;
-		thief.setThiefPositionY(1.9);
-		jumping = false;
+		//cout << thief.getThiefPositionX() << endl;
+		thief.setThiefPositionY(1.9f);
+		jumpingThief = false;
 	}
 
-	////Thief - jump
-	//if ((GetTickCount64() - jumpTimer) < (initVelocity / currentVelocity * 1000) && jumping)
-	//{
-	//	thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 20);
-	//	thief.setThiefPositionY(thief.getThiefPositionY() + currentVelocity * 5);
-	//}
-	//else if ((GetTickCount64() - jumpTimer) < (initVelocity / currentVelocity * 2000) && jumping)
-	//{
-	//	thief.setThiefPositionX(thief.getThiefPositionX() - currentVelocity / 20);
-	//	thief.setThiefPositionY(thief.getThiefPositionY() - currentVelocity * 5);
-	//}
-	//else if (jumping)
-	//{
-	//	cout << thief.getThiefPositionX() << endl;
-	//	thief.setThiefPositionY(1.9);
-	//	jumping = false;
-	//}
+	//Player - jump
+	//부동소수점 오차를 무시하면 점프할 때마다 일정 거리만큼 왼쪽으로 가게 됨
+	jumpPlayerTimer++;
+	if (jumpPlayerTimer < (initVelocity / currentVelocity * 50) && jumpingPlayer)
+	{
+		player.setPlayerPositionX(player.getPlayerPositionX() - currentVelocity / 15.0f);
+		player.setPlayerPositionY(player.getPlayerPositionY() + currentVelocity * 2.0f);
+	}
+	else if (jumpPlayerTimer < (initVelocity / currentVelocity * 100) && jumpingPlayer)
+	{
+		player.setPlayerPositionX(player.getPlayerPositionX() - currentVelocity / 15.0f);
+	}
+	else if (jumpPlayerTimer < (initVelocity / currentVelocity * 150) && jumpingPlayer)
+	{
+		player.setPlayerPositionX(player.getPlayerPositionX() - currentVelocity / 15.0f);
+		player.setPlayerPositionY(player.getPlayerPositionY() - currentVelocity * 2.0f);
+	}
+	else if (jumpingPlayer)
+	{
+		player.setPlayerPositionY(1.9f);
+		player.setPlayerPose(DEFAULT);
+		cout << player.getPlayerPositionX() << endl;
+		jumpingPlayer = false;
+	}
+
+	//Player - move toward thief with moving animation
+	if (pass) {
+		player.setPlayerPositionX(player.getPlayerPositionX() + playerDistance);
+		if ((player.getPlayerPositionX() - previousPlayerPosition) >= 1.0) {
+			previousPlayerPosition = 0.0;
+			pass = false;
+			//cameraZoomIn();
+		}
+	}
 
 	//System - check if pass or fail
 	if (walls[previous].getWallPositionX() <= (player.getPlayerPositionX() + player.getPlayerSize())) {
@@ -403,24 +415,13 @@ void moveWall2(int value) {
 			sound.playsound(PLAYERNONPASS);
 			cout << "Fail" << endl;
 			failCount++;
-			if (failCount >= 3)
-				message(false);
+			//if (failCount >= 3)
+			//	message(false);
 			pass = false;
 			previous++;
 			break;
 		}
 	}
-
-	//Player - move toward thief with moving animation
-	if (pass) {
-		player.setPlayerPositionX(player.getPlayerPositionX() + playerDistance);
-		if ((player.getPlayerPositionX() - previousPlayerPosition) >= 1.0) {
-			previousPlayerPosition = 0.0;
-			pass = false;
-			//cameraZoomIn();
-		}
-	}
-
 
 	//System - WIN if the distance between player and thief is less than a "threshold"
 	//"threshold" == player.getPlayerSize()
@@ -431,8 +432,11 @@ void moveWall2(int value) {
 	if ((cheatMode == ALL_PASS) && (GetTickCount64() - allPassTimer > 1000 * 60 * 3))
 		message(false);
 
+	//System - LOSE if the player is out of the view
+	if (player.getPlayerPositionX() < 0)
+		message(false);
+	
 	glutPostRedisplay();
-
 	glutTimerFunc(1, moveWall2, 1);
 }
 
@@ -459,7 +463,21 @@ void selectPose(int key, int x, int y) {
 	glutPostRedisplay();
 }
 
-void selectCheatMode(unsigned char key, int x, int y) {
+void doKeyboard(unsigned char key, int x, int y) {
+
+
+	switch (key)
+	{
+	case 32: // Space bar
+		if (!jumpingPlayer)
+		{
+			//Plaer - jump timer start
+			player.setPlayerPose(JUMP);
+			jumpPlayerTimer = 0;
+			jumpingPlayer = true;
+		}
+		return;
+	}
 
 	switch (key) {
 	case 'c':
@@ -506,7 +524,7 @@ int main(int argc, char** argv) {
 	//glutIdleFunc(moveWall);
 	glutTimerFunc(1, moveWall2, 1);
 	glutSpecialFunc(selectPose);
-	glutKeyboardFunc(selectCheatMode);
+	glutKeyboardFunc(doKeyboard);
 
 	//Enter event processing loop
 	glutMainLoop();

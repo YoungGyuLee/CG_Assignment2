@@ -37,7 +37,7 @@ int now = 0;		//Index of the wall just to the left of theif
 int passCount = 0;
 int failCount = 0;		//Number of fail
 int interval = 3000;	//Wall creation interval
-float initVelocity = 0.01; //Wall initial velocity
+float initVelocity = 0.02f; //Wall initial velocity
 float currentVelocity; ////Wall current velocity
 float velocity;	//Wall new velocity
 
@@ -45,13 +45,18 @@ float velocity;	//Wall new velocity
 int startTickCount = 0;
 int currentTickCount = 0;
 int allPassTimer = 0;
-int jumpTimer = 0;
-bool jumping = false;
+
+//Jump variables
+int jumpThiefTimer = 0;
+int jumpPlayerTimer = 0;
+bool jumpingThief = false;
+bool jumpingPlayer = false;
+
 
 //Player animation variables
 bool pass = false;
-float playerDistance = 0.1;
-float previousPlayerPosition = 0.0;
+float playerDistance = 0.1f;
+float previousPlayerPosition = 0.0f;
 
 //Cheatcode variables
 enum CheatMode
@@ -80,4 +85,4 @@ void moveWall();	// Change the wall position
 void moveWall2(int value);	// Change the wall position
 
 void selectPose(int key, int x, int y);	// Select player pose using keyboard input
-void selectCheatMode(unsigned char Key, int x, int y); // Selec cheat mode using keyboard input
+void doKeyboard(unsigned char Key, int x, int y); // Selec cheat mode using keyboard input

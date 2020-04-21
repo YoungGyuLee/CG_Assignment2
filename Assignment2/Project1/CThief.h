@@ -43,7 +43,6 @@ public:
 	float getThiefSize();
 
 	void drawThief();
-	void jumpThief(float velocity, int state);
 
 	void setPassCount(int passCount);
 
