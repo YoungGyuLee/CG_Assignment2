@@ -81,8 +81,8 @@ void playSound();				// Play background or effect sound
 //Input callback functions
 void display();		// Display game objects (player, theif, wall, & ground)
 void reshape(int w, int h); // reshape callback
-void moveWall();	// Change the wall position
-void moveWall2(int value);	// Change the wall position
+void doSystemCheck();	// Change the wall position
+void doAnimation(int value);	// Change the wall position
 
 void selectPose(int key, int x, int y);	// Select player pose using keyboard input
 void doKeyboard(unsigned char Key, int x, int y); // Selec cheat mode using keyboard input
