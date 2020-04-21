@@ -17,6 +17,30 @@ void init() {
 	sound.playsound(BGM);
 }
 
+void setObjectColor(int color) {
+	switch (color)
+	{
+	case RED:
+		glColor3f(1.0, 0.0, 0.0);
+		break;
+	case GREEN:
+		glColor3f(0.0, 1.0, 0.0);
+		break;
+	case BLUE:
+		glColor3f(0.0, 0.0, 1.0);
+		break;
+	case YELLOW:
+		glColor3f(1.0, 1.0, 0.0);
+		break;
+	case JUMP:
+		glColor3f(0.0, 0.0, 0.0);
+		break;
+	default:
+		glColor3f(0.0, 0.0, 0.0);
+		break;
+	}
+}
+
 
 void cameraZoomIn() {
 	glViewport(0, 0, width, height);
@@ -96,7 +120,7 @@ void display() {
 
 		//Wall - initialize position and color
 		for (int i = front; i < total; i++) {
-			glColor3f(0.0, 0.0, 0.0);
+			setObjectColor(walls[i].getWallColor());
 			glVertex2f(walls[i].getWallPositionX(), walls[i].getWallPositionY());
 			glVertex2f(walls[i].getWallPositionX(), walls[i].getWallPositionY() + walls[i].getWallHeight());
 			glVertex2f(walls[i].getWallPositionX() + walls[i].getWallWidth(), walls[i].getWallPositionY() + walls[i].getWallHeight());
@@ -126,6 +150,7 @@ void doGameCheck() {
 
 		//Wall - change to thief color
 		walls[now].setWallColor(thief.getThiefPose());
+		cout << thief.getThiefPose() << endl;
 
 		//Thief - jump timer start
 		if (walls[now].getWallColor() == JUMP) {
@@ -278,7 +303,7 @@ void doAnimation(int value) {
 	
 	glutPostRedisplay();
 
-	glutTimerFunc(0.5, doAnimation, 1);
+	glutTimerFunc(1, doAnimation, 1);
 }
 
 
